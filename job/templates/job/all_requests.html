@@ -1,0 +1,259 @@
+{% extends 'app_user/auth_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    {% include 'app_user/header.html' %}
+    <style type="text/css">
+    
+    .alert{
+        box-shadow: 5px 5px 10px #111;
+        border: none;
+    }
+    @keyframes show-toast {
+    0%   {bottom: -100%;}
+    20%  {bottom: 50px;}
+    80%  {bottom: 50px;}
+    100% {bottom: -10%;}
+}
+
+.notification.is-toast {
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 6s;
+}
+@media(max-width: 450px) {
+    h3{
+      font-size: 15px !important;
+    }
+  }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-toast alert alert-{{message.tags}} text-center" role="alert" style="background-color: #24695c; color: #fff; border-radius: 6px; font-weight: 600; z-index: 1;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+        
+
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>Your Requests</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item active">requests for you</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  <!-- Bookmark Start-->
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Bookmark Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="tab-content" id="top-tabContent">
+                      <div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+                        <div class="row">
+                          {% if all_requests %}
+                            {% for item in all_requests %}
+                          <div class="col-xxl-4 col-lg-6">
+                            <div class="project-box"><span class="badge badge-primary">Doing</span>
+                              <h6>Company Name</h6>
+                              <div class="media"><img class="img-20 me-2 rounded-circle" src="https://i.pinimg.com/originals/59/b0/75/59b0758db4b6e8e7683420aa8e2aa89f.jpg" alt="" data-original-title="" title="">
+                                <div class="media-body">
+                                  <p>{{ item.title }} : {{ item.pub_date }}</p>
+                                </div>
+                              </div>
+                              <p>{{ item.description|safe }}</p>
+                              <div class="row details">
+                                <div class="col-6"><span>Job Type </span></div>
+                                <div class="col-6 font-primary">{{ item.job_type }}</div>
+                                <div class="col-6"> <span>Salary</span></div>
+                                <div class="col-6 font-primary">{{ item.salary }}</div>
+                                <div class="col-6"> <span>Openings</span></div>
+                                <div class="col-6 font-primary">{{ item.slots }}</div>
+                                <div class="col-6"> <span>Deadline</span></div>
+                                <div class="col-6 font-primary">{{ item.deadline }}</div>
+
+                              </div>
+                              
+                              <div class="col-md-12 p-0">  
+                                <p>Advertize this Job</p>                  
+                                <div class="form-group mb-0 me-0"></div><a href="{% url 'job:add_job_fr' item.id %}" class="btn btn-primary"> Create Job
+                                </a>
+                              </div>
+                              
+                            </div>
+                          </div>
+                          {% endfor %}
+                  {% else %}
+                      <p>Sorry, nothing here to see!</p>
+                  {% endif %}
+                          
+                          
+                          
+                          
+                      
+                          
+                          
+                          
+                         
+                          
+                      
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+
+
+        <!-- footer start-->
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 footer-copyright">
+                <p class="mb-0">Copyright 2021-22 © Aibra All rights reserved.</p>
+              </div>
+              <div class="col-md-6">
+                <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+{% endblock %}
+
+    <!-- 
+    
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3>All Requests</h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/">Home</a></li>
+                    <li class="breadcrumb-item">Jobs</li>
+                    <li class="breadcrumb-item active">All Requests</li>
+                  </ol>
+                </div>
+                <div class="col-sm-6">
+                  
+                  <div class="bookmark">
+                    <ul>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Chat"><i data-feather="message-square"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Icons"><i data-feather="command"></i></a></li>
+                      <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top" title="" data-original-title="Learning"><i data-feather="layers"></i></a></li>
+                      <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
+                        <form class="form-inline search-form">
+                          <div class="form-group form-control-search">
+                            <input type="text" placeholder="Search..">
+                          </div>
+                        </form>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-12 box-col-6 pe-0">
+            {% if all_requests %}
+                {% for item in all_requests %}
+                <div class="job-sidebar"><a class="btn btn-primary job-toggle" href="javascript:void(0)">Update Resume</a>
+                  <div class="job-left-aside custom-scrollbar">
+                    <div class="file-sidebar">
+                      <div class="card">
+                        <div class="card-body">
+                         
+                           <ul>
+                            <li>
+                              
+                              <div class="btn btn-outline-primary"><i data-feather="grid">   </i>{{ item.title }}
+                                  <small>: {{ item.pub_date }}</small></div>
+                            
+                            </li>
+                            <li> 
+                              <div class="pricing-plan">
+                                <h6>Detail</h6>
+                                <small>description: {{ item.description }}</small><hr>
+                                <small>job type: {{ item.job_type }}</small><hr>
+                                <small>salary: {{ item.salary }}</small><hr>
+                            </div>
+                            </a>
+                            </li>
+                            <li> 
+                              <div class="pricing-plan">
+                                <h6>Create job advert</h6>
+                               
+                                <a  href="{% url 'job:add_job_fr' item.id %}">
+                                <div class="btn btn-outline-primary btn-xs">Create job</div>
+                              </a><img class="bg-img" src="{% static 'main/assets/images/dashboard/folder1.png' %}" alt="">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                  {% else %}
+                      <p>Sorry, nothing here to see!</p>
+                  {% endif %}
+              </div>
+                
+                  </div>
+                </div>
+                
+              </div>
+           
+          
+
+          
+        </div>
+content -->
+    
